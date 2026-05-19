@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body {
+  margin: 0;
+  overflow: hidden;
+  background: transparent;
+}
+
+#container {
+  position: absolute;
+
+  top: -15%;
+  left: -15%;
+
+  width: 140%;
+  height: 140%;
+
+  transform: rotate(-8deg);
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 4px;
+}
+
+.row {
+  display: flex;
+
+  gap: 4px;
+
+  width: max-content;
+
+  animation: scroll 40s linear infinite;
+}
+
+.square {
+  width: 80px;
+  height: 80px;
+
+  flex-shrink: 0;
+}
+
+@keyframes scroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div id="container"></div>
+
+<script>
+const container = document.getElementById("container");
+
+const colors = [
+  "#ff0000",
+  "#00ff00",
+  "#0000ff",
+  "#ff00ff",
+  "#00ffff",
+  "#ffff00",
+  "#ff6600",
+  "#9900ff"
+];
+
+const ROWS = 20;
+const COLS = 40;
+
+function randomColor() {
+  return colors[
+    Math.floor(Math.random() * colors.length)
+  ];
+}
+
+/* création lignes */
+for(let y = 0; y < ROWS; y++) {
+
+  const row = document.createElement("div");
+  row.className = "row";
+
+  const pattern = [];
+
+  /* PREMIÈRE MOITIÉ */
+  for(let x = 0; x < COLS; x++) {
+
+    const color = randomColor();
+
+    pattern.push(color);
+
+    const sq = document.createElement("div");
+
+    sq.className = "square";
+    sq.style.background = color;
+
+    row.appendChild(sq);
+  }
+
+  /* DUPLICATION IDENTIQUE */
+  pattern.forEach(color => {
+
+    const sq = document.createElement("div");
+
+    sq.className = "square";
+    sq.style.background = color;
+
+    row.appendChild(sq);
+  });
+
+  container.appendChild(row);
+}
+</script>
+
+</body>
+</html>
